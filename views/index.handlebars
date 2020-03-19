@@ -1,0 +1,20 @@
+<h1 class="center">Url Shortener</h1>
+<form action="/url" method="POST">
+  <div class="form-group">
+    <input type="text" class="form-control" name="url" id="url" aria-describedby="url">
+  </div>
+  <button type="submit" class="btn btn-outline-dark btn-lg btn-block">Short</button>
+</form>
+
+{{#if error}}
+<div class="margen alert alert-danger" role="alert">
+  {{error}}
+</div>
+{{/if}}
+
+{{#if url}}
+<div class="margen">
+  <label class="center">Long url: <a href="{{longUrl}}">{{longUrl}}</a></label><br />
+  <label class="center">Short url: <a href="{{url}}">{{url}}</a></label>
+</div>
+{{/if}}
