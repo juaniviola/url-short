@@ -1,42 +1,37 @@
-'use strict'
-
-const Sequelize = require('sequelize')
-const path = require('path')
+import Sequelize from 'sequelize';
+import path from 'path';
 
 // dialect
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: path.join(__dirname, 'db.sqlite')
+  storage: path.join(path.dirname('./'), 'db.sqlite'),
+  logging: false,
 });
 
 // model
-const Model = Sequelize.Model
-class Url extends Model {}
+const Model = Sequelize.Model;
+class Url extends Model {};
+
 Url.init({
   longUrl: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   shortUrl: {
     type: Sequelize.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 }, {
   sequelize,
-  modelName: 'url'
-})
+  modelName: 'url',
+});
 
 // setup fn
-async function modelUrl() {
+export default async function modelUrl() {
   try {
-    await sequelize.authenticate()
-    console.log('autenticado')
+    await sequelize.authenticate();
+    await sequelize.sync();
 
-    await sequelize.sync()
-    console.log('Tables created')
-
-    return Url
-  } catch (err) { console.error(err) }
+    return Url;
+  } catch (err) { console.error(err); }
 }
-
-module.exports = { modelUrl }
